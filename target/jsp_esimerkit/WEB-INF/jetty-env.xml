@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+
+   <!-- Add an data source entry which is only valid for this webapp -->
+  <New  id="jdbc/myownds"  class="org.eclipse.jetty.plus.jndi.Resource">
+     <Arg></Arg>
+     <Arg>jdbc/myds</Arg>
+     <Arg>
+       <New class="org.h2.jdbcx.JdbcDataSource">
+         <Set name="Url">jdbc:h2:tcp://localhost:9092/mem:jpatest;DB_CLOSE_DELAY=1000</Set>
+       </New>
+     </Arg>
+     <Call name="bindToENC">
+        <Arg>jdbc/h2ds</Arg>  <!-- binds jdbc/myownds to java:comp/env/jdbc/h2ds for this webapp -->
+    </Call>
+  </New>
+
+</Configure>
